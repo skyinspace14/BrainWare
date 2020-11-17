@@ -15,8 +15,10 @@ namespace Web.Infrastructure
         public Database()
         {
             // var connectionString = "Data Source=LOCALHOST;Initial Catalog=BrainWare;Integrated Security=SSPI";
-            var mdf = @"C:\Brainshark\interview\BrainWare\Web\App_Data\BrainWare.mdf";
-            var connectionString = $"Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=BrainWAre;Integrated Security=SSPI;AttachDBFilename={mdf}";
+            //var mdf = @"C:\Brainshark\interview\BrainWare\Web\App_Data\BrainWare.mdf";
+            //var connectionString = $"Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=BrainWAre;Integrated Security=SSPI;AttachDBFilename={mdf}";
+
+            var connectionString = "Data Source=SPATEL-SBK-20\\SQLEXPRESS;Initial Catalog=BrainWare;Integrated Security=SSPI";
 
             _connection = new SqlConnection(connectionString);
 

@@ -13,12 +13,35 @@ namespace Web.Controllers
 
     public class OrderController : ApiController
     {
+        //[HttpGet]
+        //public IEnumerable<Order> GetOrders(int id = 1)
+        //{
+        //    var data = new OrderService();
+
+        //    return data.GetOrdersForCompany(id);
+        //}
+
+        //Following is from Sachin
         [HttpGet]
-        public IEnumerable<Order> GetOrders(int id = 1)
+        public IEnumerable<OrderViewModel> GetOrders(int id = 1)
         {
             var data = new OrderService();
 
-            return data.GetOrdersForCompany(id);
+            var orderDetails = data.GetCompanyOrders(id);
+            var ordersByGroup = orderDetails.GroupBy(item => item.OrderDescription)
+                  .Select(group => new OrderViewModel
+                  {
+                      OrderDescription = orderDetails.First().OrderDescription,
+                      OrderTotal = group.Sum(m => m.ProductPrice * m.ProductQuantity),
+                      Products = group.ToList().Select(m => new ProductDetails
+                      {
+                          ProductName = m.ProductName,
+                          ProductPrice = m.ProductPrice,
+                          ProductQuantity = m.ProductQuantity
+                      }).ToList()
+                  })
+                  .ToList();
+            return ordersByGroup;
         }
     }
 }
